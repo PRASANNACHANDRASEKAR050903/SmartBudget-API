@@ -51,7 +51,7 @@ if (app.Environment.IsDevelopment())
 // CORS must come before Authorization
 app.UseCors("AllowAngular");
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
