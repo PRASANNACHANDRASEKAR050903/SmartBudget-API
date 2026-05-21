@@ -4,17 +4,14 @@ using SmartBudget.API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add Controllers
 builder.Services.AddControllers();
-
 
 // Repository Registration
 builder.Services.AddScoped<ExpenseRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<BudgetRepository>();
 builder.Services.AddScoped<AISuggestionRepository>();
-
 
 // MySQL Connection
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -26,41 +23,37 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-// CORS Configuration
+// CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
+    options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins(
+            policy
+                .WithOrigins(
                     "http://localhost:4200",
                     "https://frolicking-pony-e51e33.netlify.app"
-                  )
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
-
 var app = builder.Build();
 
-
-// Configure HTTP Request Pipeline
+// Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-
-// CORS must come before Authorization
-app.UseCors("AllowAngular");
+// IMPORTANT
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 
