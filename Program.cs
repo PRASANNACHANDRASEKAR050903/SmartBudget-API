@@ -4,8 +4,17 @@ using SmartBudget.API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Controllers
+
+// ==========================================
+// Add Services
+// ==========================================
+
+// Controllers
 builder.Services.AddControllers();
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Repository Registration
 builder.Services.AddScoped<ExpenseRepository>();
@@ -13,7 +22,11 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<BudgetRepository>();
 builder.Services.AddScoped<AISuggestionRepository>();
 
-// MySQL Connection
+
+// ==========================================
+// Database Connection
+// ==========================================
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -23,11 +36,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// CORS
+// ==========================================
+// CORS Configuration
+// ==========================================
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -43,22 +56,38 @@ builder.Services.AddCors(options =>
         });
 });
 
+
+// ==========================================
+// Build App
+// ==========================================
+
 var app = builder.Build();
 
-// Swagger
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
-// IMPORTANT
+// ==========================================
+// Configure HTTP Pipeline
+// ==========================================
+
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+// Enable CORS
 app.UseCors("AllowFrontend");
 
+
+// HTTPS
 app.UseHttpsRedirection();
 
+
+// Authorization
 app.UseAuthorization();
 
+
+// Map Controllers
 app.MapControllers();
 
+
+// Run App
 app.Run();
