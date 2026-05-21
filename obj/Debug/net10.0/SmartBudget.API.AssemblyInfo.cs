@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartBudget.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+759beedc13ea053cfed2ff6d9f9623de5c4c6bd9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+257d242ed51217fce36e7b7a93960c1390ef5315")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartBudget.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartBudget.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
