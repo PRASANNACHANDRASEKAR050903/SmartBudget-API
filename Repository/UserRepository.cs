@@ -12,7 +12,7 @@ namespace SmartBudget.API.Repository
             _context = context;
         }
 
-        // REGISTER
+        // Register User
         public bool Register(User user)
         {
             try
@@ -21,20 +21,26 @@ namespace SmartBudget.API.Repository
                 _context.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
 
-        // LOGIN
-        public bool Login(User user)
+        // Login
+        public User? Login(string email, string password)
         {
-            var existingUser = _context.Users.FirstOrDefault(u =>
-                u.Email == user.Email &&
-                u.Password == user.Password);
+            return _context.Users
+                .FirstOrDefault(x =>
+                    x.Email == email &&
+                    x.Password == password);
+        }
 
-            return existingUser != null;
+        // Get All Users
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
         }
     }
 }
