@@ -11,14 +11,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Connection String
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// FIXED MySQL Version
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 36));
+
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(
-            builder.Configuration.GetConnectionString("DefaultConnection")
-        )
-    )
+    options.UseMySql(connectionString, serverVersion)
 );
 
 // Repositories
@@ -46,13 +47,16 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// IMPORTANT
+// CORS
 app.UseCors("AllowFrontend");
 
+// HTTPS
 app.UseHttpsRedirection();
 
+// Authorization
 app.UseAuthorization();
 
+// Controllers
 app.MapControllers();
 
 app.Run();
