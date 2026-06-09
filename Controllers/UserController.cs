@@ -22,21 +22,38 @@ namespace SmartBudget.API.Controllers
             var result = _repository.Register(user);
 
             if (result)
-                return Ok(new { message = "User Registered Successfully" });
+            {
+                return Ok(new
+                {
+                    message = "User Registered Successfully"
+                });
+            }
 
-            return BadRequest(new { message = "Registration Failed" });
+            return BadRequest(new
+            {
+                message = "Registration Failed"
+            });
         }
 
         // LOGIN
         [HttpPost("login")]
         public IActionResult Login(User user)
         {
-            var result = _repository.Login(user);
+            var result = _repository.Login(user.Email, user.Password);
 
-            if (result)
-                return Ok(new { message = "Login Successful" });
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "Login Successful",
+                    user = result
+                });
+            }
 
-            return Unauthorized(new { message = "Invalid Email or Password" });
+            return Unauthorized(new
+            {
+                message = "Invalid Email or Password"
+            });
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SmartBudget.API.Repository
             _context = context;
         }
 
-        // Register User
+        // REGISTER
         public bool Register(User user)
         {
             try
@@ -28,16 +28,15 @@ namespace SmartBudget.API.Repository
             }
         }
 
-        // Login
+        // LOGIN
         public User? Login(string email, string password)
         {
-            return _context.Users
-                .FirstOrDefault(x =>
-                    x.Email == email &&
-                    x.Password == password);
+            return _context.Users.FirstOrDefault(u =>
+                u.Email == email &&
+                u.Password == password);
         }
 
-        // Get All Users
+        // GET ALL USERS
         public List<User> GetAllUsers()
         {
             return _context.Users.ToList();
