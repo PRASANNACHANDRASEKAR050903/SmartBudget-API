@@ -12,31 +12,31 @@ namespace SmartBudget.API.Repository
             _context = context;
         }
 
-        // REGISTER
         public bool Register(User user)
         {
             try
             {
                 _context.Users.Add(user);
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return false;
+                Console.WriteLine("REGISTRATION ERROR:");
+                Console.WriteLine(ex.ToString());
+
+                throw;
             }
         }
 
-        // LOGIN
         public User? Login(string email, string password)
         {
-            return _context.Users.FirstOrDefault(u =>
-                u.Email == email &&
-                u.Password == password);
+            return _context.Users.FirstOrDefault(x =>
+                x.Email == email &&
+                x.Password == password);
         }
 
-        // GET ALL USERS
         public List<User> GetAllUsers()
         {
             return _context.Users.ToList();

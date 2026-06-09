@@ -17,7 +17,7 @@ namespace SmartBudget.API.Controllers
 
         // REGISTER
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public IActionResult Register([FromBody] User user)
         {
             var result = _repository.Register(user);
 
@@ -37,7 +37,7 @@ namespace SmartBudget.API.Controllers
 
         // LOGIN
         [HttpPost("login")]
-        public IActionResult Login(User user)
+        public IActionResult Login([FromBody] User user)
         {
             var result = _repository.Login(user.Email, user.Password);
 
